@@ -53,7 +53,7 @@ if (!isset($_SESSION['email'])) {
 				<a class="nav-link" id="ApplyLeave" href="../apply_leave.php">Apply Leave</a>
 			</li>
 			<li class="nav-item ">
-				<a class="nav-link" id="request" href="#">Leave Requests</a>
+				<a class="nav-link" id="request">Leave Requests</a>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="LeaveRecord" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

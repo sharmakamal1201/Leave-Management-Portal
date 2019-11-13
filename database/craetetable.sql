@@ -73,11 +73,11 @@ CREATE TABLE PastRecord(
 CREATE TABLE LeaveRecord(
     leavesAvailable INTEGER,
     CurrentStatus VARCHAR(50) NOT NULL,
-    -- not applied
+    -- not_applied
     -- applied
-    -- approved by HOD
-    -- commented by HOD
-    -- not approved
+    -- approved_by_HOD
+    -- commented_by_HOD
+    -- not_approved
     -- approved
     Fid VARCHAR(50) NOT NULL,
     FOREIGN KEY (Fid) REFERENCES faculty(email)
