@@ -1,0 +1,64 @@
+#primaryContent1 {
+	
+    float: center;
+    margin-right: 50px;
+    margin-left: 50px;
+	padding-bottom: 40px;
+    font-size:14px;
+        
+}
+#primaryContent1 p {
+	margin-right: 20px;
+}
+
+#primaryContent1 b a{
+	 color: #057baa;
+}
+
+#primaryContent1 ul {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+#primaryContent1 ul li {
+	background: url(../images/square_bullet.gif) no-repeat 0 0.6em;
+	padding-left: 10px;
+	margin: 0.8333em 0 0.8333em 0;
+}
+.fac_row{
+    background-color: #ffffff;
+    padding: 18px 18px;
+    margin-bottom:25px;
+    margin-top:20px;
+    position: relative;
+    display: flex;
+        -webkit-box-shadow: 0 3px 16px 0px rgba(0,0,0,.3);
+    -moz-box-shadow:0 3px 16px 0px rgba(0,0,0,.3);
+    box-shadow:0 3px 16px 0px rgba(0,0,0,.3);
+    border-radius: 3px;
+}
+ #primaryContent1 .fac_row  img {
+        width:83px;
+        height:94px;	
+}
+#primaryContent1 .fac_row  p{
+  margin-left: 20px;
+    margin-top: 0px;
+    text-align: left;
+}
+
+#primaryContent1 .fac_row  p strong{
+   font-weight:bold !important;
+}
+ #primaryContent1 .fac_row  p em{
+    font-style: normal;
+    font-weight: bold;
+}
+.fac_img{
+    width: 100%;
+    max-width: 90px;
+    height: 100px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    padding: 2px;
+}
