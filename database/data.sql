@@ -54,9 +54,11 @@ INSERT INTO director (email,password,username,department,startDate,Fid)
 VALUES('director@iitrpr.ac.in','1234','skdas','me','2019-11-12','skdas@iitrpr.ac.in');
 
 
-INSERT INTO hierarchy (From1,To1)
-VALUES('faculty','hod');
-INSERT INTO hierarchy (From1,To1)
-VALUES('hod','deanfaa');
-INSERT INTO hierarchy (From1,To1)
-VALUES('deanfaa','director');
+INSERT INTO hierarchy (From1,rank)
+VALUES('faculty',1);
+INSERT INTO hierarchy (From1,rank)
+VALUES('hod',2);
+INSERT INTO hierarchy (From1,rank)
+VALUES('deanfaa',3);
+INSERT INTO hierarchy (From1,rank)
+VALUES('director',4);
