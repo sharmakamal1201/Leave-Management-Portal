@@ -1,9 +1,18 @@
 <?php
 include("tool/header.php");
 include("tool/functions.php");
-/*if(!isset($_SESSION['email'])){
-  header("Location: ../check.php");
-}*/
+
+if (!isset($_SESSION['email'])) {
+	header("Location: check.php");
+} else {
+	$mailid = $_SESSION['email'];
+	$query = "SELECT * FROM admin_db WHERE email= '$mailid'";
+	$res = mysqli_query($mySql_db, $query);
+	if (mysqli_num_rows($res) == 0) {
+		header("Location: check.php");
+	}
+}
+
 ?>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -40,24 +49,24 @@ include("tool/functions.php");
 				<a class="nav-link dropdown-toggle" href="#" id="hod" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Hod</a>
 				<div class="dropdown-menu" aria-labelledby="hod">
-					<a class="dropdown-item" id="addhod" href="register/registerhod.php">Add</a>
-					<a class="dropdown-item" id="edithod" href="register/changehod.php">Edit</a>
+					<a class="dropdown-item" id="addhod" href="register/register.php?action=registerhod">Add</a>
+					<a class="dropdown-item" id="edithod" href="register/change.php?action=changehod">Edit</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="hod" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Dean</a>
 				<div class="dropdown-menu" aria-labelledby="hod">
-					<a class="dropdown-item" id="adddean" href="register/registerdean.php">Add</a>
-					<a class="dropdown-item" id="editdean" href="register/changedean.php">Edit</a>
+					<a class="dropdown-item" id="adddean" href="register/register.php?action=registerdean">Add</a>
+					<a class="dropdown-item" id="editdean" href="register/change.php?action=changedean">Edit</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="hod" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Director</a>
 				<div class="dropdown-menu" aria-labelledby="hod">
-					<a class="dropdown-item" id="adddirector" href="register/registerdirector.php">Add</a>
-					<a class="dropdown-item" id="editdirector" href="register/changedirector.php">Edit</a>
+					<a class="dropdown-item" id="adddirector" href="register/register.php?action=registerdirector">Add</a>
+					<a class="dropdown-item" id="editdirector" href="register/change.php?action=changedirector">Edit</a>
 				</div>
 			</li>
 			<li class="nav-item ">
@@ -82,34 +91,35 @@ include("tool/functions.php");
 <div id="hierarchyshow"></div>
 
 <script type="text/javascript">
+	alert("<?php echo $_SESSION['email']; ?>");
 	$(document).ready(function() {
-			$("#logout").click(function() {
-				$.ajax({
-					type: "POST",
-					url: "actions.php?action=unset",
-					data: "random",
-					success: function(result) {
-						if (result == 1) {
-							window.location.href = "http://localhost/practice/project/index.php";
-						} else {
-							alert("contact kml");
-						}
+		$("#logout").click(function() {
+			$.ajax({
+				type: "POST",
+				url: "actions.php?action=unset",
+				data: "random",
+				success: function(result) {
+					if (result == 1) {
+						window.location.href = "index.php";
+					} else {
+						alert("contact kml");
 					}
-				});
-			});
-			
-			$("#showhierarchy").click(function() {
-				$.ajax({
-                type: "POST",
-                url: "actions.php?action=showhierarchy",
-                data: "random",
-                success: function(result) {
-                    $('#hierarchyshow').html(result);
-                }
-			}) 
-			
+				}
 			});
 		});
+
+		$("#showhierarchy").click(function() {
+			$.ajax({
+				type: "POST",
+				url: "actions.php?action=showhierarchy",
+				data: "random",
+				success: function(result) {
+					$('#hierarchyshow').html(result);
+				}
+			})
+
+		});
+	});
 </script>
 
 </body>

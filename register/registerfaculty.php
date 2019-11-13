@@ -82,7 +82,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="alert alert-danger loginAlert"></div>
+	<div class="alert alert-danger loginAlert" style="display:none;"></div>
 	<script type="text/javascript">
 		$("#register").click(function() {
 			$.ajax({

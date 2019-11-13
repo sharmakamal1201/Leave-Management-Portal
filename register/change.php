@@ -30,7 +30,7 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-xs-12">
-								<a href="#" class="active" id="register-form-link">Register</a>
+								<a href="#" class="active" id="register-form-link"><?php echo $_GET['action']; ?></a>
 							</div>
 						</div>
 						<hr>
@@ -39,20 +39,11 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<form id="register-form" style="display: block;">
-									<div class="form-group">
-										<input type="text" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
-									</div>
-									<div class="form-group">
-										<input type="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
-									</div>
-									<div class="form-group">
-										<input type="password" id="password" tabindex="1" class="form-control" placeholder="Password">
-                                    </div>
-									<div class="form-group">
-										<input type="password" id="confirmpassword" tabindex="1" class="form-control" placeholder="Confirm Password">
-                                    </div>
                                     <div class="form-group">
 										<input type="email" id="Fid" tabindex="1" class="form-control" placeholder="Faculty email">
+                                    </div>
+                                    <div class="form-group">
+										<input type="text" id="username" tabindex="1" class="form-control" placeholder="Name">
 									</div>
 									<div class="form-group row">
 										<label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Department</label>
@@ -65,7 +56,7 @@
 										</div>
 									</div>
 									<div class="form-group row">
-										<label for="inputPassword" class="col-sm-4 col-form-label">Start Date</label>
+										<label for="inputPassword" class="col-sm-4 col-form-label">Today's Date</label>
 										<div class="dates col-sm-12" style="color:#2471a3;">
 											<input type="text" style="background-color:#aed6f1;" class="form-control" id="startDate" name="event_date" placeholder="YYYY-MM-DD" autocomplete="off">
 										</div>
@@ -73,7 +64,7 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-6 col-sm-offset-3">
-												<input type="button" id="register" tabindex="4" class="form-control btn btn-register" value="Register Now">
+												<input type="button" id="change" tabindex="4" class="form-control btn btn-register" value="Change Now">
 											</div>
 										</div>
 									</div>
@@ -85,14 +76,15 @@
 			</div>
 		</div>
 	</div>
-	<div class="alert alert-danger loginAlert"></div>
+	<div class="alert alert-danger loginAlert" style="display:none;"></div>
 	<script type="text/javascript">
-		$("#register").click(function() {
+		var val = "<?php echo $_GET['action']; ?>";
+		alert(val);
+		$("#change").click(function() {
 			$.ajax({
 				type: "POST",
-				url: "actionreg.php?action=registerhod",
-				data: "email=" + $("#email").val() + "&password=" + $("#password").val() + "&confirmpassword=" + $("#confirmpassword").val() + "&username=" +
-					$("#username").val() + "&department=" + $("#department").val()+"&startDate=" + $("#startDate").val() + "&Fid=" + $("#Fid").val(),
+				url: "actionreg.php?action="+val,
+				data: "&username=" + $("#username").val()+"&department=" + $("#department").val()+"&startDate=" + $("#startDate").val() + "&Fid=" + $("#Fid").val(),
 				success: function(result) {
 					if (result == 1) {
 						window.location.assign("../admin.php");

@@ -6,7 +6,7 @@ $query = array('email' => $_GET["action"]);
 //checking for existing user
 $user = $collection->findOne($query);
 ?>
-<link rel="stylesheet" href="http://localhost/practice/project/css/facultypage.css">
+<link rel="stylesheet" href="css/facultypage.css">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <style>
@@ -119,7 +119,7 @@ $user = $collection->findOne($query);
 				}
 			});
 		} 
-		window.location.href = "http://localhost/practice/project/index.php";
+		window.location.href = "index.php";
 	})
 </script>
 </body>

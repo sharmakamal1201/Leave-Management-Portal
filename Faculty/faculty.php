@@ -3,6 +3,13 @@ include("../tool/header.php");
 include("../tool/functions.php");
 if(!isset($_SESSION['email'])){
   header("Location: ../check.php");
+} else {
+	$mailid = $_SESSION['email'];
+	$query = "SELECT * FROM faculty WHERE email= '$mailid'";
+	$res = mysqli_query($mySql_db, $query);
+	if (mysqli_num_rows($res) == 0) {
+		header("Location: ../check.php");
+	}
 }
 ?>
 
@@ -69,10 +76,10 @@ if(!isset($_SESSION['email'])){
 <script type="text/javascript"> 
     var val = "<?php echo $_SESSION['email']; ?>";
     $("#ViewProfile").click(function() {
-        window.location.href = "http://localhost/practice/project/view_profile.php?action=" + val;
+        window.location.href = "../view_profile.php?action=" + val;
         })
     $("#EditProfile").click(function() {
-        window.location.href = "http://localhost/practice/project/edit_profile.php?";
+        window.location.href = "../edit_profile.php?";
         })
     
     $(document).ready(function(){
@@ -83,7 +90,7 @@ if(!isset($_SESSION['email'])){
             data: "random",
             success: function(result) {
                 if(result==1){
-                    window.location.href = "http://localhost/practice/project/index.php";
+                    window.location.href = "../index.php";
                 }
                 else{
                     alert("contact kml");

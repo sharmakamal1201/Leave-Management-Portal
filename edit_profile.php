@@ -83,7 +83,7 @@ $user = $collection->findOne($qry);
           data: "biography=" + $("#biography").val() + "&research_area=" + $("#research_area").val() + "&education=" + $("#education").val() +
             "&experience=" + $("#experience").val() + "&patents=" + $("#patents").val(),
           success: function(result) {
-            window.location.replace("http://localhost/practice/project/view_profile.php?action=" + result);
+            window.location.replace("view_profile.php?action=" + result);
           }
         });
       });
@@ -93,7 +93,7 @@ $user = $collection->findOne($qry);
         url: "actions.php?action=unset",
         data: "dummy=" + $("#biography").val(),
         success: function(result) {
-          window.location.href = "http://localhost/practice/project/index.php";
+          window.location.href = "index.php";
         }
       });
       $("#logout").val('0');

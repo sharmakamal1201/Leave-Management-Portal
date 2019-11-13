@@ -119,31 +119,47 @@ else if ($_GET["action"] == "changehod" || $_GET["action"] == "changedean" || $_
         $query = "SELECT * FROM faculty WHERE email= '$Fid'";
         $res=mysqli_query($mySql_db,$query);
         if($_GET["action"] == "changehod"){
+            $myqry = "SELECT * FROM hod WHERE department='$department'";
+            $result = mysqli_query($mySql_db,$myqry);
+            $row = mysqli_fetch_assoc($result);
+            $varl = $row['Fid'];
             $sq11 = "UPDATE hod SET Fid='$Fid' WHERE department='$department'";
             $sq12 = "UPDATE hod SET username='$name' WHERE department='$department'";
             $sq13 = "UPDATE hod SET password='1234' WHERE department='$department'";
             $sq14 = "UPDATE hod SET startDate='$startDate' WHERE department='$department'";
             if (mysqli_num_rows($res) > 0){
                 $sq2 = "UPDATE faculty SET role='hod' WHERE email='$Fid'";
+                $sq3 = "UPDATE faculty SET role='faculty' WHERE email='$varl";
             }
             else{
                 $sq2 = "INSERT INTO faculty(email, password,username,department,role,startDate) VALUES('$Fid','1234','$name','$department','hod','$startDate')";
             }
         }
         if($_GET["action"] == "changedean"){
+            $myqry = "SELECT * FROM dean";
+            $result = mysqli_query($mySql_db,$myqry);
+            $row = mysqli_fetch_assoc($result);
+            $varl = $row['Fid'];
+            //echo $varl;
             $sq11 = "UPDATE dean SET Fid='$Fid'";
             $sq12 = "UPDATE dean SET username='$name'";
             $sq13 = "UPDATE dean SET password='1234'";
             $sq14 = "UPDATE dean SET department='$department'";
             $sq15 = "UPDATE dean SET startDate='$startDate'";
             if (mysqli_num_rows($res) > 0){
-                $sq2 = "UPDATE faculty SET role='dean' WHERE email='$Fid'";
+                $sq2 = "UPDATE faculty SET role='deanfaa' WHERE email='$Fid'";
+                $sq3 = "UPDATE faculty SET role='faculty' WHERE email='$varl'";
+               // print_r($Fid." ".$varl);
             }
             else{
                 $sq2 = "INSERT INTO faculty(email, password,username,department,role,startDate) VALUES('$Fid','1234','$name','$department','deanfaa','$startDate')";
             }
         }
         if($_GET["action"] == "changedirector"){
+            $myqry = "SELECT * FROM director";
+            $result = mysqli_query($mySql_db,$myqry);
+            $row = mysqli_fetch_assoc($result);
+            $varl = $row['Fid'];
             $sq11 = "UPDATE director SET Fid='$Fid'";
             $sq12 = "UPDATE director SET username='$name'";
             $sq13 = "UPDATE director SET password='1234'";
@@ -151,13 +167,14 @@ else if ($_GET["action"] == "changehod" || $_GET["action"] == "changedean" || $_
             $sq15 = "UPDATE director SET startDate='$startDate'";
             if (mysqli_num_rows($res) > 0){
                 $sq2 = "UPDATE faculty SET role='dean' WHERE email='$Fid'";
+                $sq3 = "UPDATE faculty SET role='faculty' WHERE email='$varl'";
             }
             else{
                 $sq2 = "INSERT INTO faculty(email, password,username,department,role,startDate) VALUES('$Fid','1234','$name','$department','director','$startDate')";
             }
         }
         if (mysqli_query($mySql_db, $sq11) && mysqli_query($mySql_db, $sq12) && mysqli_query($mySql_db, $sq13) && mysqli_query($mySql_db, $sq14)) {
-            if (mysqli_query($mySql_db, $sq2)) {
+            if (mysqli_query($mySql_db, $sq2) && mysqli_query($mySql_db, $sq3)) {
                 echo 1;
             } 
         } 

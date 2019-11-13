@@ -1,14 +1,15 @@
 <?php
 include("tool/header.php");
+include("tool/functions.php");
 ?>
 <style>
-	html{
-	background-image:url('image/front.jpg');
-	background-repeat: no-repeat;
-  	background-size: 100% auto;
+	html {
+		background-image: url('image/front.jpg');
+		background-repeat: no-repeat;
+		background-size: 100% auto;
 	}
 </style>
-	
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -27,35 +28,48 @@ include("tool/header.php");
 					Department
 				</a>
 				<div class="dropdown-menu" aria-labelledby="DeptDropdown">
-					<a class="dropdown-item" id="CSE">CSE</a>
-					<a class="dropdown-item" id="EE">Electrical</a>
-					<a class="dropdown-item" id="ME">Mechanical</a>
+					<a class="dropdown-item" id="CSE" href="Profiles/faculty.php?action=CSE">CSE</a>
+					<a class="dropdown-item" id="EE" href="Profiles/faculty.php?action=EE">Electrical</a>
+					<a class="dropdown-item" id="ME" href="Profiles/faculty.php?action=ME">Mechanical</a>
 				</div>
 			</li>
 		</ul>
 		<form class="form-inline my-2 my-lg-0">
-			<button class="btn btn-outline-success my-2 my-sm-0" type="button" id="login">Login</button>
+			<button class="btn btn-outline-success my-2 my-sm-0" type="button" id="login">login</button>
 		</form>
 	</div>
 </nav>
 
 <script type="text/javascript">
-	$("#login").click(function() {
-								window.location.href = "http://localhost/practice/project/login.php";
-				})
-</script>
-
-<script type="text/javascript">
-	$("#CSE").click(function() {
-				 window.location.href = "http://localhost/practice/project/Profiles/facultycse.php";
-				})
-	$("#EE").click(function() {
-				 window.location.href = "http://localhost/practice/project/Profiles/facultyee.php";
-				})
-	$("#ME").click(function() {
-				 window.location.href = "http://localhost/practice/project/Profiles/facultyme.php";
-				})
+	var toggle = "<?php
+					if (isset($_SESSION['email'])) {
+						echo 1;
+					} else echo 0;
+					?>";
+	if (toggle == 0) {
+		$("#login").html('login');
+		$("#login").click(function() {
+			window.location.href = "login.php";
+		});
+	} else {
+		$("#login").html('logout');
+		$("#login").click(function() {
+			$.ajax({
+				type: "POST",
+				url: "actions.php?action=unset",
+				data: "random",
+				success: function(result) {
+					if (result == 1) {
+						window.location.href = "index.php";
+					} else {
+						alert("contact kml");
+					}
+				}
+			});
+		})
+	}
 </script>
 
 </body>
+
 </html>

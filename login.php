@@ -1,3 +1,10 @@
+<?php
+include("tool/functions.php");
+if(isset($_SESSION['email'])){
+  header("Location: index.php");
+} 
+?>
+
 <!doctype html>
 <html>
 
@@ -29,10 +36,22 @@
 							<div class="col-lg-12">
 								<form id="login-form" role="form" style="display: block;">
 									<div class="form-group">
-										<input type="text" id="loginemail" tabindex="1" class="form-control" placeholder="Email" value="">
+										<input type="email" id="loginemail" tabindex="1" class="form-control" placeholder="Email" value="">
 									</div>
 									<div class="form-group">
 										<input type="password" id="loginpassword" tabindex="2" class="form-control" placeholder="Password">
+									</div>
+									<div class="form-group row">
+										<label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Login as</label>
+										<div class="col-sm-12">
+											<select class="form-control" id="role">
+												<option>faculty</option>
+												<option>hod</option>
+												<option>deanfaa</option>
+												<option>director</option>
+												<option>admin</option>
+											</select>
+										</div>
 									</div>
 									<div class="form-group text-center">
 										<input type="checkbox" tabindex="3" class="" name="remember" id="remember">
@@ -62,7 +81,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="alert alert-danger loginAlert"></div>
+	<div class="alert alert-danger loginAlert" style="display:none;"></div>
 	<script type="text/javascript">
 		$(function() {
 
@@ -77,14 +96,21 @@
 		});
 
 		$("#login").click(function() {
+			var val = $("#loginemail").val();
+			alert(val);
 			$.ajax({
 				type: "POST",
-				url: "http://localhost/practice/project/actions.php?action=login",
-				data: "email=" + $("#loginemail").val() + "&password=" + $("#loginpassword").val(),
+				url: "actions.php?action=login",
+				data: "role=" + $("#role").val() + "&email=" + val + "&password=" + $("#loginpassword").val(),
 				success: function(result) {
 					if (result == 1) {
-						window.location.assign("http://localhost/practice/project/Faculty/faculty.php");
-					} else {
+						window.location.assign("Faculty/faculty.php");
+					} else if (result == 2) {
+						window.location.assign("CCF/ccf.php");
+					} else if (result == 3) {
+						window.location.assign("admin.php");
+					}
+					else {
 						$(".loginAlert").html(result).show();
 					}
 				}
