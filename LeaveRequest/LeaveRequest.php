@@ -19,19 +19,11 @@ if(!isset($_SESSION['email'])){
 
 $role = $_SESSION['role'];
 $mail = $_SESSION['email'];
-$findpos = "SELECT * FROM hierarchy WHERE From1='$role'";
+$findpos = "SELECT * FROM hierarchy WHERE To1='$role'";
 $findres = mysqli_query($mySql_db,$findpos);
 $findrow = mysqli_fetch_assoc($findres);
-$curr = $findrow['rank'];
-$curr = $curr - 1;
-$findprev = "SELECT * FROM hierarchy WHERE rank=$curr";
-$prevres = mysqli_query($mySql_db,$findprev);
-$prevrow = mysqli_fetch_assoc($prevres);
-if(mysqli_num_rows($prevres)>0){
-    $prevrole = $prevrow['From1'];
-} else{
-    $prevrole = "none";
-}
+$curr = $findrow['To1'];
+$prevrole = $findrow['From1'];
 $query = "SELECT * FROM leaveapplication";
 $res = mysqli_query($mySql_db, $query);
 while ($row = mysqli_fetch_assoc($res)) {
@@ -47,7 +39,7 @@ while ($row = mysqli_fetch_assoc($res)) {
     $status_current_leave = $row_new['CurrentStatus'];
     $sd = strtotime($startDate);
     $ed = strtotime($endDate);
-    $diff = (int) (($ed - $sd) / 60 / 60 / 24);
+    $diff = (int) (($ed - $sd)/60/60/24);
     $q = "SELECT * FROM faculty WHERE email='$Fid_applicant'";
     $r = mysqli_query($mySql_db, $q);
     $rw = mysqli_fetch_assoc($r);
