@@ -12,8 +12,11 @@ if (!isset($_SESSION['email'])) {
 		header("Location: check.php");
 	}
 }
-
 ?>
+
+<link rel="stylesheet" href="css/facultypage.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <style>
@@ -76,7 +79,7 @@ if (!isset($_SESSION['email'])) {
 				<a class="nav-link dropdown-toggle" href="#" id="hierarchy" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Hierarchy</a>
 				<div class="dropdown-menu" aria-labelledby="hod">
-					<a class="dropdown-item" id="showhierarchy">Show</a>
+					<a class="dropdown-item" id="showhierarchy" href="#">Show</a>
 					<a class="dropdown-item" id="changehierarchy" href="#">Change</a>
 				</div>
 			</li>

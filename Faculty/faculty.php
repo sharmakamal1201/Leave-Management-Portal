@@ -71,8 +71,6 @@ if(!isset($_SESSION['email'])){
     </form>
   </div>
 </nav>
-
-
 <script type="text/javascript"> 
     var val = "<?php echo $_SESSION['email']; ?>";
     $("#ViewProfile").click(function() {

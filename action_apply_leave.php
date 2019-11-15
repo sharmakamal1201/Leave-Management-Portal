@@ -36,12 +36,7 @@ if (mysqli_num_rows($res) > 0) {
 	$error = "Your previous request is in Pending";
 }
 if ($error == "") {
-	$maxquery = "SELECT max(LeaveId) AS maxi FROM leaveapplication";
-	$resmax = mysqli_query($mySql_db, $maxquery);
-	$rowdata = mysqli_fetch_assoc($resmax);
-	$maximum = $rowdata['maxi'];
-	$maximum = $maximum + 1;
-	$sq1 = "INSERT INTO leaveapplication(Ltype, startDate,endDate,LeaveId,Fid) VALUES('$leaveType','$fromDate','$toDate','$maximum','$fid')";
+	$sq1 = "INSERT INTO leaveapplication(Ltype, startDate,endDate,Fid) VALUES('$leaveType','$fromDate','$toDate','$fid')";
 	mysqli_query($mySql_db, $sq1);
 	$sq11 = "SELECT * FROM leaverecord WHERE Fid='$fid'";
 	$r11 = mysqli_query($mySql_db, $sq11);

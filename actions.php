@@ -94,19 +94,17 @@ if ($_GET["action"] == "login") {
     if ($count == 0)
         echo '<p><strong>No faculty</strong><br></p>';
 } else if ($_GET["action"] == "showhierarchy") {
-    echo '<div id="primaryContent1">';
-    $query = "SELECT * FROM hierarchy";
+    echo '<div id="primaryContent1"><div class="fac_row">';
+    $query = "SELECT * FROM hierarchy ORDER BY rank";
     $res = mysqli_query($mySql_db, $query);
-    $count = 0;
+    $ttl = mysqli_num_rows($res);
+    $show = "No hierarchy";
     while ($row = mysqli_fetch_assoc($res)) {
-        $count = 1;
-        echo '<div class="fac_row">';
-        echo '<p>   From: ' . $row['From1'] . '
-                    <br>To: ' . $row['To1'] . '
-            </p>
-              </div>';
+        echo ' ' . $row['From1'] . ' ------>';
+        $show = $row['To1'];
     }
-    echo '</div>';
-    if ($count == 0)
-        echo '<p><strong>No hierarchy</strong><br></p>';
+    echo $show;
+    echo '</div></div>';
 }
+
+?>

@@ -87,10 +87,19 @@ CREATE TABLE OLD_faculty(
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL PRIMARY KEY,
     startDate DATE NOT NULL,
-    endDate DATE NOT NULL
+    endDate DATE NOT NULL,
+    department VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE OLD_HOD(  
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL PRIMARY KEY,
+    startDate DATE NOT NULL,
+    endDate DATE NOT NULL
+    department VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE OLD_Associatedean(  
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL PRIMARY KEY,
     startDate DATE NOT NULL,

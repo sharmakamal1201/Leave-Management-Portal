@@ -100,6 +100,8 @@ if (!isset($_SESSION['email'])) {
 				}
 			});
 		});
+
+
 	});
 </script>
 

@@ -105,7 +105,7 @@ if(isset($_SESSION['email'])){
 				success: function(result) {
 					if (result == 1) {
 						window.location.assign("Faculty/faculty.php");
-					} else if (result == 2) {
+					}else if (result == 2) {
 						window.location.assign("CCF/ccf.php");
 					} else if (result == 3) {
 						window.location.assign("admin.php");

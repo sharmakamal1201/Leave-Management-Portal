@@ -1,31 +1,44 @@
 <?php
-include("../tool/header.php");
 include("../tool/functions.php");
 
-if(!isset($_SESSION['email'])){
-  header("Location: ../check.php");
+if (!isset($_SESSION['email'])) {
+    header("Location: ../check.php");
 } else {
-	$mailid = $_SESSION['email'];
-	$query = "SELECT * FROM hod WHERE email= '$mailid'";
-	$res = mysqli_query($mySql_db, $query);
-	$query1 = "SELECT * FROM dean WHERE email= '$mailid'";
-	$res1 = mysqli_query($mySql_db, $query1);
-	$query2 = "SELECT * FROM director WHERE email= '$mailid'";
-	$res2 = mysqli_query($mySql_db, $query2);
-	if (mysqli_num_rows($res)==0 && mysqli_num_rows($res1)==0 && mysqli_num_rows($res2)==0) {
-		header("Location: ../check.php");
-	}
+    $mailid = $_SESSION['email'];
+    $query = "SELECT * FROM hod WHERE email= '$mailid'";
+    $res = mysqli_query($mySql_db, $query);
+    $query1 = "SELECT * FROM dean WHERE email= '$mailid'";
+    $res1 = mysqli_query($mySql_db, $query1);
+    $query2 = "SELECT * FROM director WHERE email= '$mailid'";
+    $res2 = mysqli_query($mySql_db, $query2);
+    if (mysqli_num_rows($res) == 0 && mysqli_num_rows($res1) == 0 && mysqli_num_rows($res2) == 0) {
+        header("Location: ../check.php");
+    }
 }
 
 $role = $_SESSION['role'];
 $mail = $_SESSION['email'];
 $findpos = "SELECT * FROM hierarchy WHERE To1='$role'";
-$findres = mysqli_query($mySql_db,$findpos);
+$findres = mysqli_query($mySql_db, $findpos);
 $findrow = mysqli_fetch_assoc($findres);
 $curr = $findrow['To1'];
 $prevrole = $findrow['From1'];
 $query = "SELECT * FROM leaveapplication";
 $res = mysqli_query($mySql_db, $query);
+echo '<table class="table table-hover table-sm">
+        <thead>
+        <tr>
+            <th scope="col">Leave id</th>
+            <th scope="col">Applied by</th>
+            <th scope="col">leaves available</th>
+            <th scope="col">start date</th>
+            <th scope="col">end date</th>
+            <th scope="col">leave type</th>
+            <th scope="col">Leave current status</th>
+            <th scope="col">view</th>
+            </tr>
+        </thead>
+        <tbody>';
 while ($row = mysqli_fetch_assoc($res)) {
     $Lid = $row['LeaveId'];
     $Fid_applicant = $row['Fid'];
@@ -39,7 +52,7 @@ while ($row = mysqli_fetch_assoc($res)) {
     $status_current_leave = $row_new['CurrentStatus'];
     $sd = strtotime($startDate);
     $ed = strtotime($endDate);
-    $diff = (int) (($ed - $sd)/60/60/24);
+    $diff = (int) (($ed - $sd) / 60 / 60 / 24);
     $q = "SELECT * FROM faculty WHERE email='$Fid_applicant'";
     $r = mysqli_query($mySql_db, $q);
     $rw = mysqli_fetch_assoc($r);
@@ -47,12 +60,12 @@ while ($row = mysqli_fetch_assoc($res)) {
     $role_applicant = $rw['role'];
 
     $check = 1;
-    if($role_applicant == $prevrole) {
-        if($status_current_leave != 'applied'){
+    if ($role_applicant == $prevrole) {
+        if ($status_current_leave != 'applied') {
             $check = 0;
         }
-    } else if(($role_applicant != $prevrole)) {
-        if($status_current_leave != ( 'approved by ' . $prevrole)) {
+    } else if (($role_applicant != $prevrole)) {
+        if ($status_current_leave != ('approved by ' . $prevrole)) {
             $check = 0;
         }
     }
@@ -65,19 +78,17 @@ while ($row = mysqli_fetch_assoc($res)) {
             $check = 0;
         }
     }
-    if($diff>$Avail_leaves){
-        $check = 0;
-    }
     if ($check == 1) {
-        echo '<p>Leave id: ' . $Lid .'
-            <br>Applied by: ' . $Fid_applicant . '
-            <br>leaves available: ' . $Avail_leaves . '
-            <br>start date: ' . $startDate . '
-            <br>end date: ' . $endDate . '
-            <br>leave type: ' . $Ltype . '
-            <br>Leave current status: '. $status_current_leave .'
-            <br></p>';
+        echo '<tr><td>' . $Lid . '
+        </td><td> ' . $Fid_applicant . '
+        </td><td> ' . $Avail_leaves . '
+        </td><td> ' . $startDate . '
+        </td><td> ' . $endDate . '
+        </td><td> ' . $Ltype . '
+        </td><td> ' . $status_current_leave . '
+        </td><td><a href="commentrequest.php?action='.$Lid.'">view</a>
+        </td></tr>';
     }
 }
-
+echo "</tbody></table>";
 ?>

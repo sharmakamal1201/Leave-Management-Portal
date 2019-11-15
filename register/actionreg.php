@@ -148,7 +148,7 @@ if ($_GET["action"] == "registerfaculty") {
             } else {
                 $sq2 = "INSERT INTO faculty(email, password,username,department,role,startDate) VALUES('$Fid','1234','$name','$department','hod','$startDate')";
             }
-            $sq4 = "INSERT INTO old_hod(name,email,startDate,endDate) VALUES('$var2','$var1','$var3','$startDate')";
+            $sq4 = "INSERT INTO old_hod(name,email,startDate,endDate,department) VALUES('$var2','$var1','$var3','$startDate,'$deparment')";
             $donot4 = mysqli_query($mySql_db, $sq4);
         }
         if ($_GET["action"] == "changedean") {
