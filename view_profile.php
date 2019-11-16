@@ -5,6 +5,13 @@ $collection = $database->user;
 $query = array('email' => $_GET["action"]);
 //checking for existing user
 $user = $collection->findOne($query);
+/*$email = $_GET["action"];
+$biography = $user["biography"];
+$research_area = $user["research_area"];
+$education = $user["education"];
+$experience = $user["experience"];
+$patents = $user["patents"];*/
+
 ?>
 <link rel="stylesheet" href="css/facultypage.css">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -36,7 +43,7 @@ $user = $collection->findOne($query);
         <img style="border:1px #e5e5e5 solid;" src="">
         </div>    
         <p><strong></strong>
-        	<br><i id="mail"></i>
+        	<br><i id="mail"><?php $_GET["action"];?></i>
 			<br>
 		</p>
 	</div>
@@ -47,7 +54,7 @@ $user = $collection->findOne($query);
 		Biography
 	</div>
 	<div class="card-body">
-		<div id="biography"> </div>
+		<div id="biography"><?php echo nl2br($user["biography"]); ?> </div>
 	</div>
 </div>
 
@@ -56,7 +63,7 @@ $user = $collection->findOne($query);
 		Areas of Research
 	</div>
 	<div class="card-body">
-		<div id="research_area"> </div>
+		<div id="research_area"><?php echo nl2br($user["research_area"]); ?> </div>
 	</div>
 </div>
 
@@ -65,7 +72,7 @@ $user = $collection->findOne($query);
 		Education
 	</div>
 	<div class="card-body">
-		<div id="education"> </div>
+		<div id="education"><?php echo nl2br($user["education"]); ?> </div>
 	</div>
 </div>
 <div class="card container">
@@ -73,7 +80,7 @@ $user = $collection->findOne($query);
 		Work Experience
 	</div>
 	<div class="card-body">
-		<div id="experience"> </div>
+		<div id="experience"> <?php echo nl2br($user["experience"]); ?></div>
 	</div>
 </div>
 <div class="card container">
@@ -81,17 +88,12 @@ $user = $collection->findOne($query);
 		Selected Publications/Patents
 	</div>
 	<div class="card-body">
-		<div id="patents"> </div>
+		<div id="patents"> <?php echo nl2br($user["patents"]); ?></div>
 	</div>
 </div>
 
 <script type="text/javascript">
-	$('#mail').html("<?php echo $_GET["action"];?>");
-	$("#biography").html("<p>" + "<?php echo $user["biography"]; ?>" + "</p>");
-	$("#research_area").html("<p>" + "<?php echo $user["research_area"]; ?>" + "</p>");
-	$("#education").html("<p>" + "<?php echo $user["education"]; ?>" + "</p>");
-	$("#experience").html("<p>" + "<?php echo $user["experience"]; ?>" + "</p>");
-	$("#patents").html("<p>" + "<?php echo $user["patents"]; ?>" + "</p>");
+
 	var sess='0';
 	sess = "<?php if (isset($_SESSION['email']) && $_SESSION['email']==$_GET["action"]) echo 1; else echo 0;?>";
 	alert(sess);

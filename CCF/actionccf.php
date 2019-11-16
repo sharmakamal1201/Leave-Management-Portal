@@ -1,8 +1,28 @@
 <?php
 include('../tool/functions.php');
 $role = $_SESSION['role'];
+$mail = $_SESSION['email'];
 if ($_GET['action'] == 'comment') {
-    
+    $leaveId = $_POST['Lid'];
+    $comment = $_POST['comment'];
+    /////Mongo db start here
+    $today = new MongoDate(strtotime(date('Y-m-d 00:00:00')));
+	$collection = $database->leave_application;
+	$query = array('LeaveId' => $leaveId);
+	//checking for existing user
+	$leave_obj = $collection->findOne($query);
+	$new_comment = array(
+		"role"=> $role,
+        "comment" => $comment,
+        "email"=>$_SESSION['email'],
+        "time"=>$today
+	);
+	$collection->update(
+		array("_id" => $leave_obj['_id']), 
+		array('$push' => array("CommentBy" => $new_comment))
+    );
+    /////Mongodb End here
+    echo 1;
 } 
 else if ($_GET['action'] == 'approve') {
     $Fid_applicant = $_POST['Fid'];
@@ -11,6 +31,34 @@ else if ($_GET['action'] == 'approve') {
     $Avail_leaves = $_POST['avail'];
     $Ltype = $_POST['Ltype'];
     $Lid = $_POST['Lid'];
+    $qry = "SELECT * FROM hod WHERE email='$mail'";
+    if($role=='hod'){
+        $qry = "SELECT * FROM hod WHERE email='$mail'";
+    } else if($role=='associatedean'){
+        $qry = "SELECT * FROM associatedean WHERE email='$mail'";
+    }else if($role=='deanfaa'){
+        $qry = "SELECT * FROM dean WHERE email='$mail'";
+    } else if($role=='director'){
+        $qry = "SELECT * FROM director WHERE email='$mail'";
+    }
+    $rslt = mysqli_query($mySql_db,$qry);
+    $rw = mysqli_fetch_assoc($rslt);
+    $id = $rw['Fid'];
+    /////Mongo db start here
+    $today = date('Y-m-d H:i:s');;
+	$collection = $database->leave_application;
+	$query = array('LeaveId' => $Lid);
+	$leave_obj = $collection->findOne($query);
+	$new_approve = array(
+		"role"=> $role,
+        "email"=>$id,
+        "time"=>$today
+	);
+	$collection->update(
+		array("_id" => $leave_obj['_id']), 
+		array('$push' => array("ApprovedBy" => $new_approve))
+    );
+    /////Mongodb End here
     $findpos = "SELECT * FROM hierarchy WHERE From1='$role'";
     $findres = mysqli_query($mySql_db, $findpos);
     if (mysqli_num_rows($findres) == 0) {
@@ -36,4 +84,3 @@ else if ($_GET['action'] == 'approve') {
     }
     echo 1;
 }
-?>

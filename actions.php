@@ -21,6 +21,8 @@ if ($_GET["action"] == "login") {
             $query = "SELECT * FROM faculty WHERE email= '$email'";
         } else if ($role == 'hod') {
             $query = "SELECT * FROM hod WHERE email= '$email'";
+        } else if ($role == 'associatedean') {
+            $query = "SELECT * FROM associatedean WHERE email= '$email'";
         } else if ($role == 'deanfaa') {
             $query = "SELECT * FROM dean WHERE email= '$email'";
         } else if ($role == 'director') {
@@ -122,7 +124,7 @@ if ($_GET["action"] == "login") {
         $res = mysqli_query($mySql_db, $query);
     }
     if ($Ad == '0') {
-        $query = "INSERT INTO hierarchy(rank,From1,To1) Values(3,'AssociateDean','none')";
+        $query = "INSERT INTO hierarchy(rank,From1,To1) Values(3,'associatedean','none')";
         $res = mysqli_query($mySql_db, $query);
     }
     if ($De == '0') {
@@ -156,3 +158,5 @@ if ($_GET["action"] == "login") {
     }
     
 }
+
+?>

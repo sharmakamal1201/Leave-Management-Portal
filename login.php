@@ -47,6 +47,7 @@ if(isset($_SESSION['email'])){
 											<select class="form-control" id="role">
 												<option>faculty</option>
 												<option>hod</option>
+												<option>associatedean</option>
 												<option>deanfaa</option>
 												<option>director</option>
 												<option>admin</option>

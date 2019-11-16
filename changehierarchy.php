@@ -21,7 +21,7 @@ if (mysqli_num_rows($res) == 0) {
 } else {
     $Ho = 0;
 }
-$query = "SELECT * FROM hierarchy WHERE FROM1='AssociateDean' or To1='Associatedean'";
+$query = "SELECT * FROM hierarchy WHERE FROM1='associateDean' or To1='associatedean'";
 $res = mysqli_query($mySql_db, $query);
 if (mysqli_num_rows($res) == 0) {
     $Ad = 1;

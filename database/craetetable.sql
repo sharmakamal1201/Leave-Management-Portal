@@ -1,4 +1,5 @@
 DROP TABLE director;
+DROP TABLE associatedean;
 DROP TABLE dean;
 DROP TABLE hod;
 DROP TABLE LeaveApplication;
@@ -27,6 +28,16 @@ CREATE TABLE director(
 );
 
 CREATE TABLE hod(
+    email VARCHAR(50) NOT NULL PRIMARY KEY,
+    password VARCHAR(50) NOT NULL,
+    username VARCHAR(30) NOT NULL,
+    department VARCHAR(30),
+    startDate DATE NOT NULL,
+    Fid VARCHAR(50) NOT NULL,
+    FOREIGN KEY (Fid) REFERENCES faculty(email)
+);
+
+CREATE TABLE associatedean(
     email VARCHAR(50) NOT NULL PRIMARY KEY,
     password VARCHAR(50) NOT NULL,
     username VARCHAR(30) NOT NULL,

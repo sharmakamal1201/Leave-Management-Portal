@@ -7,11 +7,13 @@ if (!isset($_SESSION['email'])) {
 	$mailid = $_SESSION['email'];
 	$query = "SELECT * FROM hod WHERE email= '$mailid'";
 	$res = mysqli_query($mySql_db, $query);
+	$query3 = "SELECT * FROM associatedean WHERE email= '$mailid'";
+	$res3 = mysqli_query($mySql_db, $query3);
 	$query1 = "SELECT * FROM dean WHERE email= '$mailid'";
 	$res1 = mysqli_query($mySql_db, $query1);
 	$query2 = "SELECT * FROM director WHERE email= '$mailid'";
 	$res2 = mysqli_query($mySql_db, $query2);
-	if (mysqli_num_rows($res) == 0 && mysqli_num_rows($res1) == 0 && mysqli_num_rows($res2) == 0) {
+	if (mysqli_num_rows($res) == 0 && mysqli_num_rows($res1) == 0 && mysqli_num_rows($res2) == 0 && mysqli_num_rows($res3) == 0) {
 		header("Location: ../check.php");
 	}
 }
