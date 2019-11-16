@@ -2,29 +2,83 @@
 include('../tool/functions.php');
 $role = $_SESSION['role'];
 $mail = $_SESSION['email'];
-if ($_GET['action'] == 'comment') {
+if ($_GET['action'] == 'reject') {
+    $Lid = $_POST['Lid'];
+    $Fid_applicant = $_POST['Fid'];
+    $query2 = "UPDATE leaverecord SET CurrentStatus = 'not applied' WHERE Fid='$Fid_applicant'";
+    $res2 = mysqli_query($mySql_db, $query2);
+    $query4 = "DELETE FROM leaveapplication WHERE Fid='$Fid_applicant'";
+    $res4 = mysqli_query($mySql_db, $query4);
+    $qry = "SELECT * FROM hod WHERE email='$mail'";
+    if ($role == 'hod') {
+        $qry = "SELECT * FROM hod WHERE email='$mail'";
+    } else if ($role == 'associatedean') {
+        $qry = "SELECT * FROM associatedean WHERE email='$mail'";
+    } else if ($role == 'deanfaa') {
+        $qry = "SELECT * FROM dean WHERE email='$mail'";
+    } else if ($role == 'director') {
+        $qry = "SELECT * FROM director WHERE email='$mail'";
+    }
+    $rslt = mysqli_query($mySql_db, $qry);
+    $rw = mysqli_fetch_assoc($rslt);
+    $id = $rw['Fid'];
+    /////Mongo db start here
+    $myTimeZone = date_default_timezone_set("Asia/kolkata");
+    $today = date('Y-m-d H:i:s');
+    $collection = $database->leave_application;
+    $query = array('LeaveId' => $Lid);
+    //checking for existing user
+    $leave_obj = $collection->findOne($query);
+    $new_val = array(
+        "role" => $role,
+        "email" => $id,
+        "time" => $today
+    );
+    $collection->update(
+        array("_id" => $leave_obj['_id']),
+        array('$push' => array("RejectedBy" => $new_val))
+    );
+    echo 1;
+    /////Mongodb End here
+} else if ($_GET['action'] == 'comment') {
     $leaveId = $_POST['Lid'];
     $comment = $_POST['comment'];
+    $qry = "SELECT * FROM hod WHERE email='$mail'";
+    if ($role == 'hod') {
+        $qry = "SELECT * FROM hod WHERE email='$mail'";
+    } else if ($role == 'associatedean') {
+        $qry = "SELECT * FROM associatedean WHERE email='$mail'";
+    } else if ($role == 'deanfaa') {
+        $qry = "SELECT * FROM dean WHERE email='$mail'";
+    } else if ($role == 'director') {
+        $qry = "SELECT * FROM director WHERE email='$mail'";
+    }
+    $rslt = mysqli_query($mySql_db, $qry);
+    $rw = mysqli_fetch_assoc($rslt);
+    $id = $rw['Fid'];
     /////Mongo db start here
-    $today = new MongoDate(strtotime(date('Y-m-d 00:00:00')));
-	$collection = $database->leave_application;
-	$query = array('LeaveId' => $leaveId);
-	//checking for existing user
-	$leave_obj = $collection->findOne($query);
-	$new_comment = array(
-		"role"=> $role,
+    $myTimeZone = date_default_timezone_set("Asia/kolkata");
+    $today = date('Y-m-d H:i:s');
+    $collection = $database->leave_application;
+    $query = array('LeaveId' => $leaveId);
+    //checking for existing user
+    $leave_obj = $collection->findOne($query);
+    $new_comment = array(
+        "role" => $role,
         "comment" => $comment,
-        "email"=>$_SESSION['email'],
-        "time"=>$today
-	);
-	$collection->update(
-		array("_id" => $leave_obj['_id']), 
-		array('$push' => array("CommentBy" => $new_comment))
+        "email" => $id,
+        "time" => $today
+    );
+    $collection->update(
+        array("_id" => $leave_obj['_id']),
+        array('$push' => array("CommentBy" => $new_comment))
     );
     /////Mongodb End here
+    $applicant_id = $_POST['applicantid'];
+    $qry2 = "UPDATE leaverecord SET CurrentStatus='reapply' WHERE Fid='$applicant_id'";
+	mysqli_query($mySql_db, $qry2);
     echo 1;
-} 
-else if ($_GET['action'] == 'approve') {
+} else if ($_GET['action'] == 'approve') {
     $Fid_applicant = $_POST['Fid'];
     $startDate = $_POST['startDate'];
     $endDate = $_POST['endDate'];
@@ -32,31 +86,31 @@ else if ($_GET['action'] == 'approve') {
     $Ltype = $_POST['Ltype'];
     $Lid = $_POST['Lid'];
     $qry = "SELECT * FROM hod WHERE email='$mail'";
-    if($role=='hod'){
+    if ($role == 'hod') {
         $qry = "SELECT * FROM hod WHERE email='$mail'";
-    } else if($role=='associatedean'){
+    } else if ($role == 'associatedean') {
         $qry = "SELECT * FROM associatedean WHERE email='$mail'";
-    }else if($role=='deanfaa'){
+    } else if ($role == 'deanfaa') {
         $qry = "SELECT * FROM dean WHERE email='$mail'";
-    } else if($role=='director'){
+    } else if ($role == 'director') {
         $qry = "SELECT * FROM director WHERE email='$mail'";
     }
-    $rslt = mysqli_query($mySql_db,$qry);
+    $rslt = mysqli_query($mySql_db, $qry);
     $rw = mysqli_fetch_assoc($rslt);
     $id = $rw['Fid'];
     /////Mongo db start here
     $today = date('Y-m-d H:i:s');;
-	$collection = $database->leave_application;
-	$query = array('LeaveId' => $Lid);
-	$leave_obj = $collection->findOne($query);
-	$new_approve = array(
-		"role"=> $role,
-        "email"=>$id,
-        "time"=>$today
-	);
-	$collection->update(
-		array("_id" => $leave_obj['_id']), 
-		array('$push' => array("ApprovedBy" => $new_approve))
+    $collection = $database->leave_application;
+    $query = array('LeaveId' => $Lid);
+    $leave_obj = $collection->findOne($query);
+    $new_approve = array(
+        "role" => $role,
+        "email" => $id,
+        "time" => $today
+    );
+    $collection->update(
+        array("_id" => $leave_obj['_id']),
+        array('$push' => array("ApprovedBy" => $new_approve))
     );
     /////Mongodb End here
     $findpos = "SELECT * FROM hierarchy WHERE From1='$role'";
@@ -64,14 +118,14 @@ else if ($_GET['action'] == 'approve') {
     if (mysqli_num_rows($findres) == 0) {
         $Lstatus = "approved";
     } else {
-        $Lstatus = "approved by ".$role;
+        $Lstatus = "approved by " . $role;
     }
     $query1 = "UPDATE leaverecord SET CurrentStatus = '$Lstatus' WHERE Fid='$Fid_applicant'";
     $res1 = mysqli_query($mySql_db, $query1);
     if ($Lstatus == 'approved') {
         $sd = strtotime($startDate);
         $ed = strtotime($endDate);
-        $diff = (int)(($ed - $sd) / 60 / 60 / 24);
+        $diff = (int) (($ed - $sd) / 60 / 60 / 24);
         $now = $Avail_leaves - $diff;
         $query2 = "UPDATE leaverecord SET leavesAvailable = '$now', CurrentStatus = 'not applied' WHERE Fid='$Fid_applicant'";
         $res2 = mysqli_query($mySql_db, $query2);

@@ -34,6 +34,13 @@ if (mysqli_num_rows($res) > 0) {
     echo "<div class='container' style='padding-top:40px;'><h4>Comments</h4><hr>";
     
     $iter = sizeof($leave_obj['CommentBy'])-1;
+    $q = "SELECT * FROM leaverecord WHERE Fid='$fid'";
+    $rst = mysqli_query($mySql_db,$q);
+    $rw1 = mysqli_fetch_assoc($rst);
+    $Cstatus = $rw1['CurrentStatus'];
+    if($Cstatus=='reapply'){
+        echo '<a class="btn btn-primary" href ="../reApply.php?action='.$leaveId.'">reApply</a>';
+    }
     while ($iter>=0) {
         echo '<div class="card" style="width:80%;">
                 <div class="card-header">

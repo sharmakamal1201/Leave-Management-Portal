@@ -1,8 +1,17 @@
 <?php
-    include("tool/functions.php");
-    if(!isset($_SESSION['email'])){
-      header("Location: check.php");
-    } 
+include("tool/functions.php");
+if (!isset($_SESSION['email'])) {
+    header("Location: check.php");
+}
+$Lid = $_GET['action'];
+
+/////Mongodb
+$collection = $database->leave_application;
+$query3 = array('LeaveId' => $Lid);
+//checking for existing user
+$leave_obj = $collection->findOne($query3);
+$message = $leave_obj['AppliedBy']['0']['message'];
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,7 +33,7 @@
 <body>
     <div class="container" style="margin-top:50px;">
         <div class="card">
-            <h5 class="card-header">Apply for leave</h5>
+            <h5 class="card-header">Re-Apply for leave</h5>
             <div class="card-body">
                 <form class="container">
                     <div class="form-group row">
@@ -54,7 +63,7 @@
                     <div class="form-group row">
                         <label for="message" class="col-sm-2 col-form-label">Message</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control" id="message" rows="5"></textarea>
+                            <textarea class="form-control" id="message" rows="5"><?php echo $message ?></textarea>
                             <a href="#" class="btn btn-primary" id="submitleave" style="margin-top:15px;">Submit</a>
                         </div>
                     </div>
@@ -63,6 +72,7 @@
         </div>
     </div>
     <script>
+        var Lid = "<?php echo $Lid; ?>";
         $(function() {
             $('.dates .usr1').datepicker({
                 'format': 'yyyy-mm-dd',
@@ -74,12 +84,12 @@
         $("#submitleave").click(function() {
             $.ajax({
                 type: "POST",
-                url: "action_apply_leave.php?action=apply",
-                data: "leaveType=" + $("#leaveType").val() + "&fromDate=" + $("#fromDate").val() + "&toDate=" + $("#toDate").val() + "&message=" + $("#message").val(),
+                url: "action_apply_leave.php?action=reApply",
+                data: "leaveType=" + $("#leaveType").val() + "&fromDate=" + $("#fromDate").val() + "&toDate=" + $("#toDate").val() + "&message=" + $("#message").val()+"&Lid="+Lid,
                 success: function(result) {
                     alert(result);
                     if (result == 1) {
-                       alert("Successfully Applied");
+                        alert("Successfully Applied");
                     } else {
                         alert("Not Applied");
                     }
