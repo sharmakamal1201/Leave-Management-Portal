@@ -11,6 +11,7 @@ if (!isset($_SESSION['email'])) {
     header("Location: ../check.php");
   }
 }
+$mailid = $_SESSION['email'];
 ?>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -40,9 +41,6 @@ if (!isset($_SESSION['email'])) {
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" id="home" href="#">Home<span class="sr-only">(current)</span></a>
-      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="MyProfile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           My Profile</a>
@@ -59,7 +57,7 @@ if (!isset($_SESSION['email'])) {
           Leave Record
         </a>
         <div class="dropdown-menu" aria-labelledby="LeaveRecord">
-          <a class="dropdown-item" href="#">Remaining leaves</a>
+          <a class="dropdown-item" href="#" id="remainingleaves">Remaining leaves</a>
           <a class="dropdown-item" id="leaveStatus" href="#">Current leave status</a>
           <a class="dropdown-item" href="#">Past record</a>
         </div>
@@ -81,6 +79,7 @@ if (!isset($_SESSION['email'])) {
   })
 
   $(document).ready(function() {
+    var val = "<?php echo $mailid; ?>"
     $("#logout").click(function() {
       $.ajax({
         type: "POST",
@@ -101,8 +100,17 @@ if (!isset($_SESSION['email'])) {
         url: "../leaveStatus.php",
         data: "random",
         success: function(result) {
-          alert(result);
           $("#change").html(result);
+        }
+      });
+    });
+    $("#remainingleaves").click(function() {
+      $.ajax({
+        type: "POST",
+        url: "../actions.php?action=remainingleaves",
+        data: "mail=" + val,
+        success: function(result) {
+          alert(result);
         }
       });
     });

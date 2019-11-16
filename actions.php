@@ -157,6 +157,17 @@ if ($_GET["action"] == "login") {
         }
     }
     
+} else if($_GET['action']=='remainingleaves'){
+    $mailid = $_POST['mail'];
+    $query = "SELECT * FROM leaverecord WHERE Fid='$mailid'";
+    $res = mysqli_query($mySql_db, $query);
+    if(mysqli_num_rows($res)>0){
+        $row = mysqli_fetch_assoc($res);
+        $Avail = $row['leavesAvailable'];
+        echo $Avail;
+    } else {
+        echo '20';
+    }
 }
 
 ?>

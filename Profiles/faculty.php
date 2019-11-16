@@ -8,7 +8,6 @@ include("../tool/functions.php");
 <div id="divfaculty"></div>
 <script type="text/javascript">
     var val = "<?php echo $_GET['action']; ?>";
-    alert(val);
     $.ajax({
         type: "POST",
         url: "../actions.php?action="+val,

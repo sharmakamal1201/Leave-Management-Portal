@@ -5,6 +5,13 @@ $mail = $_SESSION['email'];
 if ($_GET['action'] == 'reject') {
     $Lid = $_POST['Lid'];
     $Fid_applicant = $_POST['Fid'];
+    $q1 = "SELECT * FROM leaveapplication WHERE Fid='$Fid_applicant'";
+    $r1 = mysqli_query($mySql_db, $q1);
+    $rw1 = mysqli_fetch_assoc($r1);
+    $sd = $rw1['startDate'];
+    $ed = $rw1['endDate'];
+    $Ltype = $rw1['Ltype'];
+    $lvid = $rw1['LeaveId'];
     $query2 = "UPDATE leaverecord SET CurrentStatus = 'not applied' WHERE Fid='$Fid_applicant'";
     $res2 = mysqli_query($mySql_db, $query2);
     $query4 = "DELETE FROM leaveapplication WHERE Fid='$Fid_applicant'";
@@ -22,6 +29,8 @@ if ($_GET['action'] == 'reject') {
     $rslt = mysqli_query($mySql_db, $qry);
     $rw = mysqli_fetch_assoc($rslt);
     $id = $rw['Fid'];
+    $q = "INSERT INTO pastrecord(leaveType,appovalDate,Fid,startDate,endDate,Lid)  VALUES('$Ltype','0000-00-00 00:00:00','$Fid_applicant','$sd','$ed','$lvid')";
+    mysqli_query($mySql_db, $q);
     /////Mongo db start here
     $myTimeZone = date_default_timezone_set("Asia/kolkata");
     $today = date('Y-m-d H:i:s');

@@ -45,9 +45,6 @@ if (!isset($_SESSION['email'])) {
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active">
-				<a class="nav-link" id="home" href="#">Home<span class="sr-only">(current)</span></a>
-			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="hod" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Hod</a>
@@ -97,13 +94,26 @@ if (!isset($_SESSION['email'])) {
 		</form>
 	</div>
 </nav>
+<div class="container " style="padding-top:15%; padding-left:25%;">
+	<div class="row">
+	<div class="form-group col">
+		<input type="text" id="leaveId" class="form-control" placeholder="leaveId" value="">
+	</div>
+	<div class="form-group col">
+		<div class="row">
+			<div class="col-sm-2 col-sm-offset-3">
+				<button class="btn btn-primary"  id="findleaveInfo">Search</button>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
 <div id="reg"></div>
 
 <div id="hierarchyshow"></div>
 <div id="hierarchychange"></div>
 
 <script type="text/javascript">
-	alert("<?php echo $_SESSION['email']; ?>");
 	$(document).ready(function() {
 		$("#logout").click(function() {
 			$.ajax({
@@ -132,8 +142,20 @@ if (!isset($_SESSION['email'])) {
 
 		});
 
-		
-		
+		$("#findleaveInfo").click(function() {
+			var val = $("#leaveId").val();
+			$.ajax({
+				type: "POST",
+				url: "findinfo.php",
+				data: "leaveId="+val,
+				success: function(result) {
+					$('#hierarchyshow').html(result);
+				}
+			})
+
+		});
+
+
 	});
 </script>
 

@@ -88,7 +88,6 @@
 	<div class="alert alert-danger loginAlert" style="display:none;"></div>
 	<script type="text/javascript">
 		var val = "<?php echo $_GET['action']; ?>";
-		alert(val);
 		$("#register").click(function() {
 			$.ajax({
 				type: "POST",
@@ -98,9 +97,7 @@
 				success: function(result) {
 					if (result == 1) {
 						window.location.assign("../admin.php");
-						alert("every thing is fine");
 					} else {
-                        alert("not fine");
 						$(".loginAlert").html(result).show();
 					}
 				}

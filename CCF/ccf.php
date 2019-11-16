@@ -48,24 +48,11 @@ if (!isset($_SESSION['email'])) {
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active">
-				<a class="nav-link" id="home" href="#">Home<span class="sr-only">(current)</span></a>
-			</li>
 			<li class="nav-item">
 				<a class="nav-link" id="ApplyLeave" href="../apply_leave.php">Apply Leave</a>
 			</li>
 			<li class="nav-item ">
 				<a class="nav-link" id="request" href="#">Leave Requests</a>
-			</li>
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="LeaveRecord" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Leave Record
-				</a>
-				<div class="dropdown-menu" aria-labelledby="LeaveRecord">
-					<a class="dropdown-item" href="#">Remaining leaves</a>
-					<a class="dropdown-item" href="#">Current leave status</a>
-					<a class="dropdown-item" href="#">Past record</a>
-				</div>
 			</li>
 		</ul>
 		<form class="form-inline my-2 my-lg-0">
@@ -102,7 +89,7 @@ if (!isset($_SESSION['email'])) {
 				}
 			});
 		});
-
+		
 
 	});
 </script>

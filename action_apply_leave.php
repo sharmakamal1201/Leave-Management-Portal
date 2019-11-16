@@ -75,17 +75,16 @@ if ($_GET['action'] == 'reApply' && $error=="") {
 
 		//Mongodb Section//
 		//$collection = $database->createCollection("leave_application");
-		$today = new MongoDate(strtotime(date('Y-m-d 00:00:00')));
+		$myTimeZone = date_default_timezone_set("Asia/kolkata");
+        $today = date('Y-m-d H:i:s');
 		$collection = $database->leave_application;
-		$leave_application = array("LeaveId" => $leaveId, "AppliedTime" => $today, "AppliedBy" => array(), "CommentBy" => array(), "ApprovedBy" => array(), "RejectedBy" => array());
+		$leave_application = array("LeaveId" => $leaveId, "email" => $fid, "AppliedTime" => $today, "AppliedBy" => array(), "CommentBy" => array(), "ApprovedBy" => array(), "RejectedBy" => array());
 		$collection->save($leave_application);
 		$query = array("LeaveId" => $leaveId);
 		//checking for existing user
 		$leave_obj = $collection->findOne($query);
 		if (empty($leave_obj)) {
 			echo 4;
-		} else {
-			echo 5;
 		}
 		$new_task = array(
 			"role" => $role,

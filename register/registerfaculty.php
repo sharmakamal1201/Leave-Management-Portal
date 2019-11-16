@@ -93,7 +93,6 @@
 				success: function(result) {
 					if (result == 1) {
 						window.location.assign("../admin.php");
-						alert("every thing is fine");
 					} else {
 						$(".loginAlert").html(result).show();
 					}

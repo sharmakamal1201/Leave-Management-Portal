@@ -96,7 +96,6 @@ $message = $leave_obj['AppliedBy']['0']['message'];
         var endDate = "<?php echo $endDate; ?>";
         var avail = "<?php echo $Avail_leaves; ?>";
         var Ltype = "<?php echo $Ltype; ?>";
-        alert(Lid);
         $("#reject").click(function() {
             $.ajax({
                 type: "POST",

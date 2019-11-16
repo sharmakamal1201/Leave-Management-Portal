@@ -98,7 +98,6 @@ if(isset($_SESSION['email'])){
 
 		$("#login").click(function() {
 			var val = $("#loginemail").val();
-			alert(val);
 			$.ajax({
 				type: "POST",
 				url: "actions.php?action=login",

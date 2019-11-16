@@ -79,7 +79,6 @@
 	<div class="alert alert-danger loginAlert" style="display:none;"></div>
 	<script type="text/javascript">
 		var val = "<?php echo $_GET['action']; ?>";
-		alert(val);
 		$("#change").click(function() {
 			$.ajax({
 				type: "POST",

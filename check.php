@@ -1,1 +1,1 @@
-Cannot direct come here without login
+Cannot directly come here

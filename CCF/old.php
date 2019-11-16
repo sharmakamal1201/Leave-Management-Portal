@@ -8,7 +8,6 @@ include("../tool/functions.php");
 <div id="divfaculty" class=></div>
 <script type="text/javascript">
     var val = "<?php echo $_GET['action']; ?>";
-    alert(val);
     $.ajax({
         type: "POST",
         url: "oldccfaction.php?action="+val,
