@@ -105,6 +105,54 @@ if ($_GET["action"] == "login") {
     }
     echo $show;
     echo '</div></div>';
+} else if ($_GET["action"] == "changehierarchy") {
+    $query = "DELETE FROM hierarchy WHERE rank>0";
+    $res = mysqli_query($mySql_db, $query);
+    $Fa = $_POST['Fa'];
+    $Ho = $_POST['Ho'];
+    $Ad = $_POST['Ad'];
+    $De = $_POST['De'];
+    $Di = $_POST['Di'];
+    if ($Fa == '0') {
+        $query = "INSERT INTO hierarchy(rank,From1,To1) Values(1,'faculty','none')";
+        $res = mysqli_query($mySql_db, $query);
+    }
+    if ($Ho == '0') {
+        $query = "INSERT INTO hierarchy(rank,From1,To1) Values(2,'hod','none')";
+        $res = mysqli_query($mySql_db, $query);
+    }
+    if ($Ad == '0') {
+        $query = "INSERT INTO hierarchy(rank,From1,To1) Values(3,'AssociateDean','none')";
+        $res = mysqli_query($mySql_db, $query);
+    }
+    if ($De == '0') {
+        $query = "INSERT INTO hierarchy(rank,From1,To1) Values(4,'deanfaa','none')";
+        $res = mysqli_query($mySql_db, $query);
+    }
+    if ($Di == '0') {
+        $query = "INSERT INTO hierarchy(rank,From1,To1) Values(5,'director','none')";
+        $res = mysqli_query($mySql_db, $query);
+    }
+    $query1 = "SELECT * FROM hierarchy ORDER BY rank";
+    $query2 = "SELECT * FROM hierarchy ORDER BY rank";
+    $res1 = mysqli_query($mySql_db, $query1);
+    $res2 = mysqli_query($mySql_db, $query2);
+    if (mysqli_num_rows($res1) > 0) {
+        if(mysqli_num_rows($res1) == 1){
+            $query = "DELETE FROM hierarchy WHERE rank>0";
+            $res = mysqli_query($mySql_db, $query);
+        } else{
+            $row1 = mysqli_fetch_assoc($res1);
+            while ($row1 = mysqli_fetch_assoc($res1)) {
+                $T = $row1['From1'];
+                $row2 = mysqli_fetch_assoc($res2);
+                $F = $row2['From1'];
+                $query = "UPDATE hierarchy SET To1='$T' WHERE From1='$F'";
+                $res = mysqli_query($mySql_db, $query);
+            }
+            $query = "DELETE FROM hierarchy WHERE To1='none'";
+            $res = mysqli_query($mySql_db, $query);
+        }
+    }
+    
 }
-
-?>

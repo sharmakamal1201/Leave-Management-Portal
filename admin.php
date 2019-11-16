@@ -80,7 +80,7 @@ if (!isset($_SESSION['email'])) {
 					Hierarchy</a>
 				<div class="dropdown-menu" aria-labelledby="hod">
 					<a class="dropdown-item" id="showhierarchy" href="#">Show</a>
-					<a class="dropdown-item" id="changehierarchy" href="#">Change</a>
+					<a class="dropdown-item" id="changehierarchy" href="changehierarchy.php">Change</a>
 				</div>
 			</li>
 		</ul>
@@ -92,6 +92,7 @@ if (!isset($_SESSION['email'])) {
 <div id="reg"></div>
 
 <div id="hierarchyshow"></div>
+<div id="hierarchychange"></div>
 
 <script type="text/javascript">
 	alert("<?php echo $_SESSION['email']; ?>");
@@ -122,6 +123,9 @@ if (!isset($_SESSION['email'])) {
 			})
 
 		});
+
+		
+		
 	});
 </script>
 

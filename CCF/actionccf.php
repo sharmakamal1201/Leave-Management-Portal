@@ -2,7 +2,7 @@
 include('../tool/functions.php');
 $role = $_SESSION['role'];
 if ($_GET['action'] == 'comment') {
-    echo 1;
+    
 } 
 else if ($_GET['action'] == 'approve') {
     $Fid_applicant = $_POST['Fid'];
