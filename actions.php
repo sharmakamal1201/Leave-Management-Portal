@@ -140,10 +140,10 @@ if ($_GET["action"] == "login") {
     $res1 = mysqli_query($mySql_db, $query1);
     $res2 = mysqli_query($mySql_db, $query2);
     if (mysqli_num_rows($res1) > 0) {
-        if(mysqli_num_rows($res1) == 1){
+        if (mysqli_num_rows($res1) == 1) {
             $query = "DELETE FROM hierarchy WHERE rank>0";
             $res = mysqli_query($mySql_db, $query);
-        } else{
+        } else {
             $row1 = mysqli_fetch_assoc($res1);
             while ($row1 = mysqli_fetch_assoc($res1)) {
                 $T = $row1['From1'];
@@ -156,20 +156,52 @@ if ($_GET["action"] == "login") {
             $res = mysqli_query($mySql_db, $query);
         }
     }
-    
-} else if($_GET['action']=='remainingleaves'){
+} else if ($_GET['action'] == 'remainingleaves') {
     $mailid = $_POST['mail'];
     $query = "SELECT * FROM leaverecord WHERE Fid='$mailid'";
     $res = mysqli_query($mySql_db, $query);
-    if(mysqli_num_rows($res)>0){
+    if (mysqli_num_rows($res) > 0) {
         $row = mysqli_fetch_assoc($res);
         $Avail = $row['leavesAvailable'];
         echo $Avail;
     } else {
         echo '20';
     }
-}
-else if($_GET['action']=='changepass'){
+} else if ($_GET['action'] == 'pastrecord') {
+    $mailid = $_POST['mail'];
+    $query = "SELECT * FROM pastrecord WHERE Fid='$mailid'";
+    $res = mysqli_query($mySql_db, $query);
+    if (mysqli_num_rows($res) == 0) {
+        echo 'No leave applied untill....';
+    } else {
+        echo '<table class="table table-hover table-sm">
+        <thead>
+        <tr>
+            <th scope="col">Leave id</th>
+            <th scope="col">Leave type</th>
+            <th scope="col">start date</th>
+            <th scope="col">end date</th>
+            <th scope="col">Approval Date</th>
+            <th scope="col">View details</th>
+            </tr>
+        </thead>
+        <tbody>';
+        while ($row = mysqli_fetch_assoc($res)) {
+            $Ltype = $row['leaveType'];
+            $Lid = $row['Lid'];
+            $sd = $row['startDate'];
+            $ed = $row['endDate'];
+            $apDate = $row['approvalDate'];
+            echo '<tr><td>' . $Lid . '
+            </td><td> ' . $Ltype . '
+            </td><td> ' . $sd . '
+            </td><td> ' . $ed . '
+            </td><td> ' . $apDate . '
+            </td><td><a href="#" class="views" data-value="'.$Lid.'">view</a>
+            </td></tr>';
+        }
+    }
+} else if ($_GET['action'] == 'changepass') {
     $email = $_SESSION['email'];
     $password = $_POST['newpass'];
     $password2 = $_POST['confirmpass'];
@@ -182,37 +214,35 @@ else if($_GET['action']=='changepass'){
     if ($password != $password2) {
         $error = "Password and Confirm password are not matching";
     }
-    if($error==""){
+    if ($error == "") {
         $password = md5($password);
         $role = $_SESSION['role'];
         $qry = "UPDATE faculty SET password='$password' WHERE email = '$email'";
-        $temp =0;
+        $temp = 0;
         if ($role == 'hod') {
             $qry = "UPDATE hod SET password='$password' WHERE email = '$email'";
-            $temp =1;
+            $temp = 1;
         } else if ($role == 'associatedean') {
             $qry = "UPDATE associatedean SET password='$password' WHERE email = '$email'";
-            $temp =1;
+            $temp = 1;
         } else if ($role == 'deanfaa') {
             $qry = "UPDATE dean SET password='$password' WHERE email = '$email'";
-            $temp =1;
+            $temp = 1;
         } else if ($role == 'director') {
             $qry = "UPDATE director SET password='$password' WHERE email = '$email'";
-            $temp =1;
+            $temp = 1;
         } else if ($role == 'admin') {
             $qry = "UPDATE adimin_db SET password='$password' WHERE email = '$email'";
-            $temp =1;
+            $temp = 1;
         }
         mysqli_query($mySql_db, $qry);
-        if($temp==0)
+        if ($temp == 0)
             echo 1;
         else
             echo 2;
-    }
-    else{
+    } else {
         echo $error;
     }
-
 }
 
 ?>

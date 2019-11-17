@@ -146,7 +146,7 @@ if (!isset($_SESSION['email'])) {
 			var val = $("#leaveId").val();
 			$.ajax({
 				type: "POST",
-				url: "findinfo.php",
+				url: "findInfo.php",
 				data: "leaveId="+val,
 				success: function(result) {
 					$('#hierarchyshow').html(result);

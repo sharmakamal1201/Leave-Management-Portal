@@ -13,7 +13,7 @@ if (!isset($_SESSION['email'])) {
 }
 $mailid = $_SESSION['email'];
 ?>
-
+<link rel="stylesheet" href="../css/facultypage.css">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <style>
   .top_div {
@@ -59,20 +59,20 @@ $mailid = $_SESSION['email'];
         <div class="dropdown-menu" aria-labelledby="LeaveRecord">
           <a class="dropdown-item" href="#" id="remainingleaves">Remaining leaves</a>
           <a class="dropdown-item" id="leaveStatus" href="#">Current leave status</a>
-          <a class="dropdown-item" href="#">Past record</a>
+          <a class="dropdown-item" id="pastrecord" href="#">Past record</a>
         </div>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="changepass" style="margin-right:5px;">ChangePassword</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="changepass" style="margin-right:5px;">ChangePassword</button>
       <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="logout">Logout</button>
     </form>
   </div>
 </nav>
 <div id="change"></div>
 <script type="text/javascript">
-  $("#changepass").click(function(){
-    window.location.href ="../changepassword.php";
+  $("#changepass").click(function() {
+    window.location.href = "../changepassword.php";
   })
   var val = "<?php echo $_SESSION['email']; ?>";
   $("#ViewProfile").click(function() {
@@ -115,6 +115,27 @@ $mailid = $_SESSION['email'];
         data: "mail=" + val,
         success: function(result) {
           alert(result);
+        }
+      });
+    });
+    $("#pastrecord").click(function() {
+      $.ajax({
+        type: "POST",
+        url: "../actions.php?action=pastrecord",
+        data: "mail=" + val,
+        success: function(result) {
+          $("#change").html(result);
+          $(".views").click(function() {
+            $.ajax({
+              type: "POST",
+              url: "../findInfo.php",
+              data: "leaveId=" + $(this).data("value"),
+              success: function(result) {
+                $('#change').html(result);
+              }
+            })
+
+          });
         }
       });
     });
