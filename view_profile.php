@@ -40,10 +40,10 @@ $patents = $user["patents"];*/
 <div id="primaryContent1">
         <div class="fac_row">
         <div class="fac_img">
-        <img style="border:1px #e5e5e5 solid;" src="">
+        <img style="border:1px #e5e5e5 solid;" src="image/images.jpg">
         </div>    
         <p><strong></strong>
-        	<br><i id="mail"><?php $_GET["action"];?></i>
+        	<br><i id="mail"><?php echo $_GET["action"];?></i>
 			<br>
 		</p>
 	</div>

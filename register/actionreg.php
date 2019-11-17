@@ -34,7 +34,8 @@ if ($_GET["action"] == "registerfaculty") {
         if (mysqli_num_rows($res) > 0) {
             $error = "Email already exists";
         } else {
-            $sql = "INSERT INTO faculty(email, password,username,department,role,startDate) VALUES('$email','$password','$fname','$department','$role','$startDate')";
+            $pass = md5($password);
+            $sql = "INSERT INTO faculty(email, password,username,department,role,startDate) VALUES('$email','$pass','$fname','$department','$role','$startDate')";
             if (mysqli_query($mySql_db, $sql)) {
                 $id = mysqli_insert_id($mySql_db);
                 /* $qry = "UPDATE myguests SET password = ".md5(md5($id).$password)."
@@ -100,25 +101,32 @@ if ($_GET["action"] == "registerfaculty") {
         if (mysqli_num_rows($res) > 0) {
             $error = "Email already exists";
         } else if (mysqli_num_rows($res1) == 0) {
-            $error = "Wrong email or department";
+            $pass = md5($password);
+            $sq11 = "INSERT INTO faculty(email, password,username,department,role,startDate) VALUES('$Fid','$pass','$fname','$department','faculty','$startDate')";
+            mysqli_query($mySql_db, $sq11);
+        }
+        $pass = md5($password); ////changed
+        if ($_GET["action"] == "registerhod") {
+            $sql = "INSERT INTO hod(email, password,username,department,startDate,Fid) VALUES('$email','$pass','$fname','$department','$startDate','$Fid')";
+            $sq2 = "UPDATE faculty SET role='hod' WHERE email='$Fid'";
+        }
+
+        if ($_GET["action"] == "registerassociatedean") {
+            $sql = "INSERT INTO associatedean(email, password,username,department,startDate,Fid) VALUES('$email','$pass','$fname','$department','$startDate','$Fid')";
+            $sq2 = "UPDATE faculty SET role='associatedean' WHERE email='$Fid'";
+        }
+        if ($_GET["action"] == "registerdean") {
+            $sql = "INSERT INTO dean(email, password,username,department,startDate,Fid) VALUES('$email','$pass','$fname','$department','$startDate','$Fid')";
+            $sq2 = "UPDATE faculty SET role='deanfaa' WHERE email='$Fid'";
+        }
+        if ($_GET["action"] == "registerdirector") {
+            $sql = "INSERT INTO director(email, password,username,department,startDate,Fid) VALUES('$email','$pass','$fname','$department','$startDate','$Fid')";
+            $sq2 = "UPDATE faculty SET role='director' WHERE email='$Fid'";
+        }
+        if (mysqli_query($mySql_db, $sql) && mysqli_query($mySql_db, $sq2)) {
+            echo 1;
         } else {
-            if ($_GET["action"] == "registerhod") {
-                $sql = "INSERT INTO hod(email, password,username,department,startDate,Fid) VALUES('$email','$password','$fname','$department','$startDate','$Fid')";
-            }
-            if ($_GET["action"] == "registerassociatedean") {
-                $sql = "INSERT INTO associatedean(email, password,username,department,startDate,Fid) VALUES('$email','$password','$fname','$department','$startDate','$Fid')";
-            }
-            if ($_GET["action"] == "registerdean") {
-                $sql = "INSERT INTO dean(email, password,username,department,startDate,Fid) VALUES('$email','$password','$fname','$department','$startDate','$Fid')";
-            }
-            if ($_GET["action"] == "registerdirector") {
-                $sql = "INSERT INTO director(email, password,username,department,startDate,Fid) VALUES('$email','$password','$fname','$department','$startDate','$Fid')";
-            }
-            if (mysqli_query($mySql_db, $sql)) {
-                echo 1;
-            } else {
-                $error =  "Could not create user - Please try again later.";
-            }
+            $error =  "Could not create user - Please try again later.";
         }
     }
     if ($error != "") {
@@ -145,7 +153,8 @@ if ($_GET["action"] == "registerfaculty") {
             $var1 = $row['Fid'];
             $var2 = $row['username'];
             $var3 = $row['startDate'];
-            $sq1 = "UPDATE hod SET Fid='$Fid', username='$name', password='1234', startDate='$startDate' WHERE department='$department'";
+            $pass = md5('1234');
+            $sq1 = "UPDATE hod SET Fid='$Fid', username='$name', password='$pass', startDate='$startDate' WHERE department='$department'";
             $donot1 = mysqli_query($mySql_db, $sq1);
             if (mysqli_num_rows($res) > 0) {
                 $sq2 = "UPDATE faculty SET role='hod' WHERE email='$Fid'";
@@ -154,7 +163,7 @@ if ($_GET["action"] == "registerfaculty") {
             } else {
                 $sq2 = "INSERT INTO faculty(email, password,username,department,role,startDate) VALUES('$Fid','1234','$name','$department','hod','$startDate')";
             }
-            $sq4 = "INSERT INTO old_hod(name,email,startDate,endDate,department) VALUES('$var2','$var1','$var3','$startDate,'$deparment')";
+            $sq4 = "INSERT INTO old_hod(name,email,startDate,endDate,department) VALUES('$var2','$var1','$var3','$startDate','$department')";
             $donot4 = mysqli_query($mySql_db, $sq4);
         }
         if ($_GET["action"] == "changeassociatedean") {
@@ -164,7 +173,8 @@ if ($_GET["action"] == "registerfaculty") {
             $var1 = $row['Fid'];
             $var2 = $row['username'];
             $var3 = $row['startDate'];
-            $sq1 = "UPDATE associatedean SET Fid='$Fid', username='$name', password='1234', department='$department', startDate='$startDate'";
+            $pass = md5('1234');
+            $sq1 = "UPDATE associatedean SET Fid='$Fid', username='$name', password='$pass', department='$department', startDate='$startDate'";
             $donot1 = mysqli_query($mySql_db, $sq1);
             if (mysqli_num_rows($res) > 0) {
                 $sq2 = "UPDATE faculty SET role='associatedean' WHERE email='$Fid'";
@@ -183,7 +193,8 @@ if ($_GET["action"] == "registerfaculty") {
             $var1 = $row['Fid'];
             $var2 = $row['username'];
             $var3 = $row['startDate'];
-            $sq1 = "UPDATE dean SET Fid='$Fid', username='$name', password='1234', department='$department', startDate='$startDate'";
+            $pass = md5('1234');
+            $sq1 = "UPDATE dean SET Fid='$Fid', username='$name', password='$pass', department='$department', startDate='$startDate'";
             $donot1 = mysqli_query($mySql_db, $sq1);
             if (mysqli_num_rows($res) > 0) {
                 $sq2 = "UPDATE faculty SET role='deanfaa' WHERE email='$Fid'";
@@ -202,14 +213,16 @@ if ($_GET["action"] == "registerfaculty") {
             $var1 = $row['Fid'];
             $var2 = $row['username'];
             $var3 = $row['startDate'];
-            $sq1 = "UPDATE director SET Fid='$Fid', username='$name', password='1234', department='$department', startDate='$startDate'";
+            $pass = md5('1234');
+            $sq1 = "UPDATE director SET Fid='$Fid', username='$name', password='$pass', department='$department', startDate='$startDate'";
             $donot1 = mysqli_query($mySql_db, $sq1);
             if (mysqli_num_rows($res) > 0) {
                 $sq2 = "UPDATE faculty SET role='director' WHERE email='$Fid'";
                 $sq3 = "UPDATE faculty SET role='faculty' WHERE email='$var1'";
                 $donot3 = mysqli_query($mySql_db, $sq3);
             } else {
-                $sq2 = "INSERT INTO faculty(email, password,username,department,role,startDate) VALUES('$Fid','1234','$name','$department','director','$startDate')";
+                $pass = md5('1234');
+                $sq2 = "INSERT INTO faculty(email, password,username,department,role,startDate) VALUES('$Fid','$pass','$name','$department','director','$startDate')";
             }
             $sq4 = "INSERT INTO old_director(name,email,startDate,endDate) VALUES('$var2','$var1','$var3','$startDate')";
             $donot4 = mysqli_query($mySql_db, $sq4);
@@ -224,4 +237,3 @@ if ($_GET["action"] == "registerfaculty") {
 if ($error != "") {
     echo $error;
 }
-?>

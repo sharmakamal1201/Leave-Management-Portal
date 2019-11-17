@@ -4,9 +4,9 @@ include("tool/functions.php");
 ?>
 <style>
 	html {
-		background-image: url('image/front.jpg');
+		background-image: url('image/front1.jpg');
 		background-repeat: no-repeat;
-		background-size: 100% auto;
+		background-size: 100% 750px;
 	}
 </style>
 

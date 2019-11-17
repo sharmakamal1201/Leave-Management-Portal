@@ -56,6 +56,7 @@ if (!isset($_SESSION['email'])) {
 			</li>
 		</ul>
 		<form class="form-inline my-2 my-lg-0">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="button" id="changepass" style="margin-right:5px;">ChangePassword</button>
 			<button class="btn btn-outline-success my-2 my-sm-0" type="button" id="logout">Logout</button>
 		</form>
 	</div>
@@ -63,6 +64,9 @@ if (!isset($_SESSION['email'])) {
 
 <div id="divid"></div>
 <script type="text/javascript">
+	$("#changepass").click(function() {
+		window.location.href = "../changepassword.php";
+	})
 	$(document).ready(function() {
 		$("#logout").click(function() {
 			$.ajax({
@@ -89,7 +93,7 @@ if (!isset($_SESSION['email'])) {
 				}
 			});
 		});
-		
+
 
 	});
 </script>

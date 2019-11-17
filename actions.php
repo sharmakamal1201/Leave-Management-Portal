@@ -32,7 +32,7 @@ if ($_GET["action"] == "login") {
         }
         $res = mysqli_query($mySql_db, $query);
         $row = mysqli_fetch_assoc($res);
-        if ($row["password"] == $password) {
+        if ($row["password"] == md5($password)) {
             $_SESSION["email"] = $email;
             $_SESSION["role"] = $role;
             if ($role == 'faculty') {
@@ -168,6 +168,51 @@ if ($_GET["action"] == "login") {
     } else {
         echo '20';
     }
+}
+else if($_GET['action']=='changepass'){
+    $email = $_SESSION['email'];
+    $password = $_POST['newpass'];
+    $password2 = $_POST['confirmpass'];
+    if (!$password) {
+        $error = "Please enter password";
+    }
+    if (!$password2) {
+        $error = "Please enter Confirm password";
+    }
+    if ($password != $password2) {
+        $error = "Password and Confirm password are not matching";
+    }
+    if($error==""){
+        $password = md5($password);
+        $role = $_SESSION['role'];
+        $qry = "UPDATE faculty SET password='$password' WHERE email = '$email'";
+        $temp =0;
+        if ($role == 'hod') {
+            $qry = "UPDATE hod SET password='$password' WHERE email = '$email'";
+            $temp =1;
+        } else if ($role == 'associatedean') {
+            $qry = "UPDATE associatedean SET password='$password' WHERE email = '$email'";
+            $temp =1;
+        } else if ($role == 'deanfaa') {
+            $qry = "UPDATE dean SET password='$password' WHERE email = '$email'";
+            $temp =1;
+        } else if ($role == 'director') {
+            $qry = "UPDATE director SET password='$password' WHERE email = '$email'";
+            $temp =1;
+        } else if ($role == 'admin') {
+            $qry = "UPDATE adimin_db SET password='$password' WHERE email = '$email'";
+            $temp =1;
+        }
+        mysqli_query($mySql_db, $qry);
+        if($temp==0)
+            echo 1;
+        else
+            echo 2;
+    }
+    else{
+        echo $error;
+    }
+
 }
 
 ?>

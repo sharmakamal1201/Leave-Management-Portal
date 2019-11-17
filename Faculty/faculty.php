@@ -64,12 +64,16 @@ $mailid = $_SESSION['email'];
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="changepass" style="margin-right:5px;">ChangePassword</button>
       <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="logout">Logout</button>
     </form>
   </div>
 </nav>
 <div id="change"></div>
 <script type="text/javascript">
+  $("#changepass").click(function(){
+    window.location.href ="../changepassword.php";
+  })
   var val = "<?php echo $_SESSION['email']; ?>";
   $("#ViewProfile").click(function() {
     window.location.href = "../view_profile.php?action=" + val;

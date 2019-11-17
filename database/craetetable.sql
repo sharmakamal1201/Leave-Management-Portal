@@ -74,10 +74,12 @@ CREATE TABLE LeaveApplication(
 );
 
 CREATE TABLE PastRecord(  
-    approvedBy VARCHAR(50) NOT NULL,
     leaveType VARCHAR(50) NOT NULL,
-    appovalDate DATE NOT NULL,
+    appovalDate datetime NOT NULL,
     Fid VARCHAR(50) NOT NULL,
+    startDate DATE NOT NULL,
+    endDate DATE NOT NULL,
+    Lid INTEGER NOT NULL,
     FOREIGN KEY (Fid) REFERENCES faculty(email)
 );
 
@@ -106,7 +108,7 @@ CREATE TABLE OLD_HOD(
     name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL PRIMARY KEY,
     startDate DATE NOT NULL,
-    endDate DATE NOT NULL
+    endDate DATE NOT NULL,
     department VARCHAR(50) NOT NULL
 );
 
