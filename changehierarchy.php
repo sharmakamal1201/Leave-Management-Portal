@@ -129,7 +129,7 @@ if (mysqli_num_rows($res) == 0) {
                 url: "actions.php?action=changehierarchy",
                 data: "Fa="+$("#add_faculty").val()+"&Ho="+$("#add_hod").val()+"&Ad="+$("#add_Adean").val()+"&De="+$("#add_dean").val()+"&Di="+$("#add_director").val(),
                 success: function(result) {
-                    alert($("#add_faculty").val() + $("#add_hod").val() + $("#add_Adean").val() + $("#add_dean").val() + $("#add_director").val());
+                    var val = " 1 ";
                 }
             })
         });

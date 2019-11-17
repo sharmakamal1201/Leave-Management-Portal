@@ -192,6 +192,9 @@ if ($_GET["action"] == "login") {
             $sd = $row['startDate'];
             $ed = $row['endDate'];
             $apDate = $row['approvalDate'];
+            if($apDate == '0000-00-00 00:00:00'){
+                $apDate = 'rejected';
+            }
             echo '<tr><td>' . $Lid . '
             </td><td> ' . $Ltype . '
             </td><td> ' . $sd . '

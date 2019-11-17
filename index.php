@@ -50,6 +50,15 @@ include("tool/functions.php");
 					<a class="dropdown-item" id="olddirectors" href="CCF/old.php?action=olddirectors">Directors</a>
 				</div>
 			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="facultycurrentandold" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Faculty
+				</a>
+				<div class="dropdown-menu" aria-labelledby="DeptDropdown">
+					<a class="dropdown-item" id="currentfaculty" href="CCF/old.php?action=currentfaculty">Current</a>
+					<a class="dropdown-item" id="oldfaculty" href="CCF/old.php?action=oldfaculty">Previous</a>
+				</div>
+			</li>
 		</ul>
 		<form class="form-inline my-2 my-lg-0">
 			<button class="btn btn-outline-success my-2 my-sm-0" type="button" id="login">login</button>

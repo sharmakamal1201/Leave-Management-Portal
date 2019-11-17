@@ -77,9 +77,13 @@
                 url: "action_apply_leave.php?action=apply",
                 data: "leaveType=" + $("#leaveType").val() + "&fromDate=" + $("#fromDate").val() + "&toDate=" + $("#toDate").val() + "&message=" + $("#message").val(),
                 success: function(result) {
+                    alert(result);
                     if (result == 1) {
                        alert("Successfully Applied");
-                    } else {
+                    } else if(result == -11){
+                        alert("Successfully applied but you have borrowed leave from future years");
+                    }
+                     else {
                         alert("Not Applied");
                     }
                 }

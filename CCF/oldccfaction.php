@@ -33,18 +33,22 @@ if($_GET['action']=='oldcsehod' || $_GET['action']=='oldeehod' || $_GET['action'
         </td><td> ' . $email . '
         </td><td> ' . $startDate . '
         </td><td> ' . $endDate . '
-        </td><td> ' . $department ;
+        </td><td> ' . $department;
     }
     echo "</tbody></table></div></div>";
 }
 else if($_GET['action']=='oldAdeans' || $_GET['action']=='olddeans' || $_GET['action']=='olddirectors'){
     $query = "SELECT * FROM old_director";
+    $var = 'director';
     if($_GET['action']=='oldAdeans'){
         $query = "SELECT * FROM old_Associatedean";
+        $var = 'Assocdean';
     } else if($_GET['action']=='olddeans'){
         $query = "SELECT * FROM old_dean";
+        $var = 'dean';
     } else if($_GET['action']=='olddirectors'){
         $query = "SELECT * FROM old_director";
+        $var = 'director';
     }
     $res = mysqli_query($mySql_db, $query);
     echo '<div id="primaryContent1"><div class="fac_row">';
@@ -69,6 +73,34 @@ else if($_GET['action']=='oldAdeans' || $_GET['action']=='olddeans' || $_GET['ac
         </td><td> ' . $endDate;
     }
     echo "</tbody></table></div></div>";
+} else if ($_GET['action']=='currentfaculty'){
+    $q = "SELECT * FROM faculty";
+    $r = mysqli_query($mySql_db,$q);
+    echo '<div id="primaryContent1"><div class="fac_row">';
+    echo '<table class="table table-hover table-sm">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">EmailId</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">Department</th>
+            <th scope="col">View</th>
+            </tr>
+        </thead>
+        <tbody>';
+    while($w = mysqli_fetch_assoc($r)){
+        $name = $w['username'];
+        $email = $w['email'];
+        $startDate = $w['startDate'];
+        $department = $w['department'];
+        echo '<tr><td>' . $name . '
+            </td><td> ' . $email . '
+            </td><td> ' . $startDate . '
+            </td><td> ' . $department.'
+            </td><td> <a href="approveRecord.php?email='.$email.'&role=f">View</a>';
+    }
+    echo "</tbody></table></div></div>";
+
 }
 
 ?>
