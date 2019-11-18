@@ -77,8 +77,13 @@ if (!isset($_SESSION['email'])) {
 					<a class="dropdown-item" id="editdirector" href="register/change.php?action=changedirector">Edit</a>
 				</div>
 			</li>
-			<li class="nav-item ">
-				<a class="nav-link" id="addfaculty" href="register/registerfaculty.php">Add Faculty</a>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="faculty" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Faculty</a>
+				<div class="dropdown-menu" aria-labelledby="hod">
+					<a class="dropdown-item" id="addfaculty" href="register/registerfaculty.php">Add</a>
+					<a class="dropdown-item" id="addfaculty" href="register/removefaculty.php">Remove</a>
+				</div>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="hierarchy" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

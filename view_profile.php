@@ -96,7 +96,6 @@ $patents = $user["patents"];*/
 
 	var sess='0';
 	sess = "<?php if (isset($_SESSION['email']) && $_SESSION['email']==$_GET["action"]) echo 1; else echo 0;?>";
-	alert(sess);
 	if (sess == '1') {
 		$("#toggle-login-logout").html('Logout');
 		$("#toggle-login-logout").val('1');
@@ -116,7 +115,6 @@ $patents = $user["patents"];*/
 				url: "actions.php?action=unset",
 				data: "dummy=" + $("#biography").val(),
 				success: function(result) {
-					alert(result);
 					$("#toggle-login-logout").html('Login');
 				}
 			});

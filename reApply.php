@@ -87,7 +87,6 @@ $message = $leave_obj['AppliedBy']['0']['message'];
                 url: "action_apply_leave.php?action=reApply",
                 data: "leaveType=" + $("#leaveType").val() + "&fromDate=" + $("#fromDate").val() + "&toDate=" + $("#toDate").val() + "&message=" + $("#message").val()+"&Lid="+Lid,
                 success: function(result) {
-                    alert(result);
                     if (result == 1) {
                         alert("Successfully Applied");
                     } else {
