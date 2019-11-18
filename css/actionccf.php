@@ -108,8 +108,7 @@ if ($_GET['action'] == 'reject') {
     $rw = mysqli_fetch_assoc($rslt);
     $id = $rw['Fid'];
     /////Mongo db start here
-    $myTimeZone = date_default_timezone_set("Asia/kolkata");
-    $today = date('Y-m-d H:i:s');
+    $today = date('Y-m-d H:i:s');;
     $collection = $database->leave_application;
     $query = array('LeaveId' => $Lid);
     $leave_obj = $collection->findOne($query);
@@ -123,6 +122,8 @@ if ($_GET['action'] == 'reject') {
         array('$push' => array("ApprovedBy" => $new_approve))
     );
     /////Mongodb End here
+
+    ///mongo for Approve start here
     $collection = $database->ApproveRequest;
     $query = array('email' => $id);
     $leave_obj = $collection->findOne($query);
@@ -135,6 +136,9 @@ if ($_GET['action'] == 'reject') {
         array("_id" => $leave_obj['_id']),
         array('$push' => array("Approve" => $new_approve))
     );
+    ///
+
+
     $findpos = "SELECT * FROM hierarchy WHERE From1='$role'";
     $findres = mysqli_query($mySql_db, $findpos);
     if (mysqli_num_rows($findres) == 0) {
@@ -160,5 +164,3 @@ if ($_GET['action'] == 'reject') {
     }
     echo 1;
 }
-
-?>
