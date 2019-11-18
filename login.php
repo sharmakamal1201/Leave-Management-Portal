@@ -7,7 +7,7 @@ if(isset($_SESSION['email'])){
 
 <!doctype html>
 <html>
-
+<title> Login </title>
 <head>
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link rel="stylesheet" href="css/login_signup.css">

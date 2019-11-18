@@ -67,7 +67,7 @@ if ($_GET['action'] == 'reApply' && $error == "") {
 	);
 	echo 1;
 	////mongodb end here
-} else if($error=""){
+} else if($error==""){
 	$qry = "";
 	if ($role == 'hod') {
 		$qry = "SELECT * FROM hod WHERE  email = '$fid'";

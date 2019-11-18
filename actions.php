@@ -246,6 +246,20 @@ if ($_GET["action"] == "login") {
     } else {
         echo $error;
     }
+} else if ($_GET['action']='renew'){
+    $q = "SELECT * FROM leaverecord";
+    $r = mysqli_query($mySql_db,$q);
+    while($w=mysqli_fetch_assoc($r)){
+        $avail = $w['leavesAvailable'];
+        $Fid = $w['Fid'];
+        $var = 20;
+        if($avail<0){
+            $var = 20 + $avail;
+        }
+        $qry = "UPDATE leaverecord SET leavesAvailable = '$var'  WHERE Fid = '$Fid'";
+        mysqli_query($mySql_db,$qry);
+    }
+    echo 1;
 }
 
 ?>

@@ -112,7 +112,6 @@ $message = $leave_obj['AppliedBy'][$iter]['message'];
                 url: "actionccf.php?action=reject",
                 data: "Lid=" + Lid + "&Fid=" + fid,
                 success: function(result) {
-                    alert(result);
                     if (result == 1) {
                         window.location.href = "ccf.php";
                     } else {
@@ -128,7 +127,6 @@ $message = $leave_obj['AppliedBy'][$iter]['message'];
                 url: "actionccf.php?action=comment",
                 data: "Lid=" + Lid + "&applicantid=" + fid +"&comment=" + $("#write_comment").val(),
                 success: function(result) {
-                    alert(result);
                     if (result == 1) {
                         window.location.href = "ccf.php";
                     } else {
